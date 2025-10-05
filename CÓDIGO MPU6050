@@ -45,7 +45,7 @@ void deteccionMPU() {
   // define que la velocidad angular de rotación va de +- 500 deg/s
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
 
-  // define la frecuencia a la que trabaja el giroscopio 21 Hz (pensemos en frecuencia de radio)
+  // define la frecuencia a la que trabaja el giroscopio va eliminar el "ruido" de la señal
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
 
   // da unos milisegundos de retardo, para evitar que se trabe
