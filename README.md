@@ -14,7 +14,7 @@ en el botón "+" seleccionar MPU6050
 ![arduino mega new](https://github.com/user-attachments/assets/f0d3d06d-e676-4356-843a-3160f9d3790f)
 
 Instrucciones:
-1. (OPCIONAL) Para mayor orden se puede incluir y colocar una protobard y conectar el MPU sobre la misma.
+1. (OPCIONAL) Para mayor orden se puede incluir y colocar una protoboard y conectar el MPU sobre la misma.
 2. Conexión del MPU 6050 - con el arduinoMega
 
 MPU         ARDUINO
