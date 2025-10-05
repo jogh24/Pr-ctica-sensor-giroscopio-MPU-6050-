@@ -1,0 +1,91 @@
+/*
+  Este código utiliza varias biliotecas, al correr el código por primera vez
+  en wowki el programa solicitara instalarlas, si se utiliza Arduino IDE considerar instalarlas primero.
+  La libreria Adafruit_MPU6050 permite recuperar facilmente datos del sensor MPU 6050. 
+  El programa funciona: primero se inicializa la comunicación serial y se verifica que el sensor se detecta
+  si no es así el programa enviara un aviso (código set up), al sensor ser detectado correctamente
+  en el void loop se establece que se envien e impriman los datos de aceleración y rotación constantemente
+  (así como temperatura)
+  
+  Library: https://github.com/adafruit/Adafruit_MPU6050  (Adafruit MPU6050 by Adafruit)
+*/
+
+
+// las librerias que se necesitan
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+#include <Wire.h>
+
+// nombramos nuestro sensor (es un "objeto"), similar a cuando nombramos los servos. 
+Adafruit_MPU6050 mpu;
+
+
+void setup() {
+  // iniciamos comunacición serial (entre compu y arduino)
+  Serial.begin(9600);
+  deteccionMPU();
+
+}
+
+//verificar que el sensor MPU fue detectado correctamente
+void deteccionMPU() {
+ // verifica si se detecta el sensor, OJO, para esto se necesita tener la libreria correctamente instalada
+  // https://adafruit.github.io/Adafruit_MPU6050/html/class_adafruit___m_p_u6050.html
+  if (!mpu.begin()) {
+    Serial.println("No se detecta MPU6050");
+    while (1) {
+      delay(10);
+    }
+  }
+  Serial.println("MPU6050 encontrado!");
+
+    // define que el rango de aceleración va ir de + 8G hasta -8G
+  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+
+  // define que la velocidad angular de rotación va de +- 500 deg/s
+  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+
+  // define la frecuencia a la que trabaja el giroscopio 21 Hz (pensemos en frecuencia de radio)
+  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
+
+  // da unos milisegundos de retardo, para evitar que se trabe
+  delay(100);
+
+}
+
+
+void loop() {
+  // el sensor va medir 3 variables: aceleración, vel rotación y temp, en ese orden (aquí definimos que las mida y las guarde en ese orden)
+  // OJO está función tambíen es recurso de la libraria.
+  sensors_event_t a, g, temp;
+  mpu.getEvent(&a, &g, &temp);
+
+  // imprime las aceleración de los eje "x", "y", "z" m/s^2
+  Serial.print("Acceleration:   X:");
+  Serial.print(a.acceleration.x);
+  Serial.print(", Y:");
+  Serial.print(a.acceleration.y);
+  Serial.print(", Z:");
+  Serial.print(a.acceleration.z);
+  Serial.println(" (m/s^2)");
+
+  // imprime la velocidad de rotación rad/s
+  Serial.print("Rotation:       X:");
+  Serial.print(g.gyro.x);
+  Serial.print(", Y:");
+  Serial.print(g.gyro.y);
+  Serial.print(", Z:");
+  Serial.print(g.gyro.z);
+  Serial.println(" (rad/s)");
+
+  // imprime la temp en grados Celsius
+  Serial.print("Temperature:    ");
+  Serial.print(temp.temperature);
+  Serial.println(" (degC)");
+
+  // luego de imprimir los datos deja una línea en blanco antes de los siguientes
+  Serial.println("");
+
+  // retardo de 1 seg para el siguiente dato
+  delay(1000);
+}
