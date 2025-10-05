@@ -17,11 +17,15 @@ Instrucciones:
 1. (OPCIONAL) Para mayor orden se puede incluir y colocar una protoboard y conectar el MPU sobre la misma.
 2. Conexión del MPU 6050 - con el arduinoMega
 
-MPU         ARDUINO
-VCC         5V
-GND         GND
-SCL         21
-SDA         20
+  MPU -------  ARDUINO
+
+  VCC --------- 5V
+
+  GND --------- GND
+
+  SCL----------- 21
+
+  SDA --------- 20
 
 ![conexión giroscopio](https://github.com/user-attachments/assets/6837f23d-79cf-4fab-8334-b5217f36da81)
 
